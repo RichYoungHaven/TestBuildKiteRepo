@@ -13,3 +13,5 @@ steps:
     fields:
       - text: "What is the date today?"
         key: "todays-date"
+  - label: "Do Stuff"
+    command: script.sh
