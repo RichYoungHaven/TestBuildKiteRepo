@@ -1,23 +1,23 @@
 steps:
   - label: ":gb: tf validate :terraform:"
     key: "validate-terraform"
-    command: true
+    command: .buildkite/scripts/placeholder.sh
   
   - label: ":flag-gb: terraform: static analysis: :aws-lambda:"
     key: "checkov"
-    command: true
+    command: .buildkite/scripts/placeholder.sh
 
   - wait
 
   - label: ":gb: dev build & apply :terraform:"
     depends_on:
       - "validate-terraform"
-    command: .true
+    command: .buildkite/scripts/placeholder.sh
 
   - label: ":gb: staging build & apply :terraform:"
     depends_on:
       - "validate-terraform"
-    command: true
+    command: .buildkite/scripts/placeholder.sh
     env:
       ENV: staging
     if: build.branch == pipeline.default_branch
@@ -31,7 +31,7 @@ steps:
     depends_on:
       - "block-qa"
       - "validate-terraform"
-    command: true
+    command: .buildkite/scripts/placeholder.sh
     if: build.branch == pipeline.default_branch
 
   - input: ":gb: deploy to production? :thumbsup:"
@@ -43,6 +43,6 @@ steps:
     depends_on:
       - "block-production"
       - "validate-terraform"
-    command: true
+    command: .buildkite/scripts/placeholder.sh
     if: build.branch == pipeline.default_branch
 
