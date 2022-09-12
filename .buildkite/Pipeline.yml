@@ -1,7 +1,48 @@
 steps:
-  - input: "Information please"
-    fields:
-      - text: "What is the date today?"
-        key: "todays-date"
-  - label: "Do Stuff"
-    command: script.sh
+  - label: ":gb: tf validate :terraform:"
+    key: "validate-terraform"
+    command: true
+  
+  - label: ":flag-gb: terraform: static analysis: :aws-lambda:"
+    key: "checkov"
+    command: true
+
+  - wait
+
+  - label: ":gb: dev build & apply :terraform:"
+    depends_on:
+      - "validate-terraform"
+    command: .true
+
+  - label: ":gb: staging build & apply :terraform:"
+    depends_on:
+      - "validate-terraform"
+    command: true
+    env:
+      ENV: staging
+    if: build.branch == pipeline.default_branch
+
+  - input: ":gb: deploy to qa? :thumbsup:"
+    key: "block-qa"
+    if: build.branch == pipeline.default_branch
+    prompt: "Confirm deployment to QA?"
+
+  - label: ":gb: qa build & apply :terraform:"
+    depends_on:
+      - "block-qa"
+      - "validate-terraform"
+    command: true
+    if: build.branch == pipeline.default_branch
+
+  - input: ":gb: deploy to production? :thumbsup:"
+    key: "block-production"
+    if: build.branch == pipeline.default_branch
+    prompt: "Confirm deployment to Production?"
+
+  - label: ":gb: prod build & apply :terraform:"
+    depends_on:
+      - "block-production"
+      - "validate-terraform"
+    command: true
+    if: build.branch == pipeline.default_branch
+
