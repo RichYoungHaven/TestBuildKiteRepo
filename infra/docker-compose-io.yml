@@ -1,0 +1,8 @@
+---
+version: '3.2'
+services:
+  alpine:
+    image: alpine
+    working_dir: /app    
+    volumes:
+      - .:/app
