@@ -1,0 +1,22 @@
+name: "Test Buildkite example repo"
+steps:
+  - block: "Delete deployed stack"
+    fields:
+      - select: "Environment"
+        hint: "The deployed environment to destroy"
+        key: "environmentAccount"
+        required: true
+        options:
+          - label: "development"
+            value: "development,butlins-development"
+          - label: "uat"
+            value: "uat,butlins-uat"
+          - label: "production"
+            value: "production,butlins-production"
+          
+
+            
+  - label: ":boom: delete stack"
+    depends_on:
+      - "environmentAccount"
+    command: .buildkite/scripts/delete-environment.sh
