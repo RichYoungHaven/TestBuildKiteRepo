@@ -80,7 +80,7 @@ shellTF: .env
 
 .PHONY: _init
 _init:
-	$(RUN_TF) init -backend-config=config/$(REGION)/$(ENV).$(AWS_DEFAULT_REGION).backend
+	$(RUN_TF) init -backend-config=config/$(ENV).$(AWS_DEFAULT_REGION).backend
 
 .PHONY: init_test
 init_test: clean

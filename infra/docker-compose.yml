@@ -10,6 +10,7 @@
       working_dir: /app
       volumes:
         - .:/app:rw
+        - ~:/app:rw
         - ~/.aws:/root/.aws
 
     # authenicate:
@@ -31,3 +32,4 @@
       working_dir: /app
       volumes:
         - .:/app:rw
+        - ~:/app:rw
