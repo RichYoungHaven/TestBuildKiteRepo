@@ -32,7 +32,8 @@ TF_VARS := -var 'region=$(AWS_DEFAULT_REGION)' \
 # docker-compose calls
 RUN_ALPINE = @docker-compose $(IO_COMPOSE) run --rm alpine
 RUN_TF = docker-compose run --rm terraform
-CHECKOV = docker-compose run --rm checkov --download-external-modules true 
+CHECKOV = docker-compose run --rm checkov --download-external-modules true
+
 
 .PHONY: auth
 auth: .env
@@ -42,6 +43,7 @@ auth: .env
 .PHONY: static_analysis
 static_analysis: .env init_test
 	$(CHECKOV) -d /app
+
 
 .PHONY: test
 test: .env
