@@ -4,8 +4,13 @@ module "s3_bucket" {
   bucket = var.application_bucket_name
   acl    = "private"
 
+  block_public_acls = true
+  block_public_policy = true
+
   versioning = {
     enabled = true
   }
+
+  
 
 }
