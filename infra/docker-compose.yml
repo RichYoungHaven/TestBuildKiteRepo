@@ -9,8 +9,7 @@
         AWS_SHARED_CREDENTIALS_FILE: /root/.aws/credentials
       working_dir: /app
       volumes:
-   #     - .:/app:rw
-        - ~:/app:rw
+        - .:/app:rw
         - ~/.aws:/root/.aws
 
     # authenicate:
@@ -31,5 +30,4 @@
       image: bridgecrew/checkov
       working_dir: /app
       volumes:
-     #   - .:/app:rw
-        - ~:/app:rw
+        - .:/app:rw
