@@ -2,6 +2,6 @@
 set -euo pipefail
 cd infra
 
-ls-la
+ls -la
 
 make static_analysis
