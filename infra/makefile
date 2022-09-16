@@ -84,7 +84,7 @@ _init:
 
 .PHONY: init_test
 init_test: clean
-	ls-la
+	ls -la
 	echo -e Initialising Terraform with no backend...
 	$(RUN_TF) init -input=false -backend=false
 
