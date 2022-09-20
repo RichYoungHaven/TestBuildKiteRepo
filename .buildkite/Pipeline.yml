@@ -10,7 +10,7 @@ env:
 steps:
   - label: ":gb: tf validate :terraform:"
     key: "validate-terraform"
-    command: .buildkite/scripts/placeholder.sh
+    command: .buildkite/scripts/validate-terraform.sh
   
   - label: ":flag-gb: terraform: static analysis: :aws-lambda:"
     key: "checkov"
