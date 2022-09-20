@@ -1,0 +1,3 @@
+bucket = "staging-tfstate.butlins.com"
+key ="team/product/thisisthestatefile.tfstate"
+region="eu-west-1"

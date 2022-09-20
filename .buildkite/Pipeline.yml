@@ -1,3 +1,12 @@
+name: "Test Buildkite example repo"
+env:
+  IS_BUILDKITE: ${BUILDKITE}
+  BUILD_NUMBER: ${BUILDKITE_BUILD_NUMBER}
+  GIT_PULL_REQUEST: ${BUILDKITE_PULL_REQUEST}
+  PULL_REQUEST_BASE_BRANCH: ${BUILDKITE_PULL_REQUEST_BASE_BRANCH}
+  GIT_COMMIT: ${BUILDKITE_COMMIT}
+  GIT_BRANCH: ${BUILDKITE_BRANCH}
+  AWS_DEFAULT_REGION: eu-west-1
 steps:
   - label: ":gb: tf validate :terraform:"
     key: "validate-terraform"
@@ -5,7 +14,9 @@ steps:
   
   - label: ":flag-gb: terraform: static analysis: :aws-lambda:"
     key: "checkov"
-    command: .buildkite/scripts/placeholder.sh
+    command: .buildkite/scripts/static-analysis.sh
+    env:
+      ENV: development
 
   - wait
 
@@ -13,13 +24,8 @@ steps:
     depends_on:
       - "validate-terraform"
     command: .buildkite/scripts/placeholder.sh
-
-  - label: ":gb: staging build & apply :terraform:"
-    depends_on:
-      - "validate-terraform"
-    command: .buildkite/scripts/placeholder.sh
     env:
-      ENV: staging
+      ENV: development
     if: build.branch == pipeline.default_branch
 
   - input: ":gb: deploy to qa? :thumbsup:"
@@ -32,6 +38,8 @@ steps:
       - "block-qa"
       - "validate-terraform"
     command: .buildkite/scripts/placeholder.sh
+    env:
+      ENV: uat
     if: build.branch == pipeline.default_branch
 
   - input: ":gb: deploy to production? :thumbsup:"
@@ -44,5 +52,7 @@ steps:
       - "block-production"
       - "validate-terraform"
     command: .buildkite/scripts/placeholder.sh
+    env:
+      ENV: production
     if: build.branch == pipeline.default_branch
 
