@@ -42,7 +42,7 @@ auth: .env
 
 .PHONY: static_analysis
 static_analysis: .env init_test
-	$(CHECKOV) /app
+	$(CHECKOV) -d /app
 
 
 .PHONY: test
