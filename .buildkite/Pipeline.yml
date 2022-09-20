@@ -17,6 +17,8 @@ steps:
   - label: ":flag-gb: terraform: static analysis: :aws-lambda:"
     key: "checkov"
     command: .buildkite/scripts/static-analysis.sh
+    soft_fail:
+    - exit_status: 2
     env:
       ENV: development
     agents:
