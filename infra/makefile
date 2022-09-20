@@ -32,7 +32,7 @@ TF_VARS := -var 'region=$(AWS_DEFAULT_REGION)' \
 # docker-compose calls
 RUN_ALPINE = @docker-compose $(IO_COMPOSE) run --rm alpine
 RUN_TF = docker-compose run --rm terraform
-CHECKOV = docker-compose run --rm checkov --download-external-modules true -c "ls -la"
+CHECKOV = docker-compose run --rm checkov --download-external-modules true
 
 
 .PHONY: auth
@@ -80,6 +80,7 @@ shellTF: .env
 
 .PHONY: _init
 _init:
+	echo -e config/$(ENV).$(AWS_DEFAULT_REGION).backend
 	$(RUN_TF) init -backend-config=config/$(ENV).$(AWS_DEFAULT_REGION).backend
 
 .PHONY: init_test
