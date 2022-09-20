@@ -11,12 +11,16 @@ steps:
   - label: ":gb: tf validate :terraform:"
     key: "validate-terraform"
     command: .buildkite/scripts/validate-terraform.sh
+    agents:
+      queue: haven-dev-agent
   
   - label: ":flag-gb: terraform: static analysis: :aws-lambda:"
     key: "checkov"
     command: .buildkite/scripts/static-analysis.sh
     env:
       ENV: development
+    agents:
+      queue: haven-dev-agent
 
   - wait
 
@@ -27,6 +31,8 @@ steps:
     env:
       ENV: development
     if: build.branch == pipeline.default_branch
+    agents:
+      queue: haven-dev-agent
 
   - input: ":gb: deploy to qa? :thumbsup:"
     key: "block-qa"
@@ -41,6 +47,8 @@ steps:
     env:
       ENV: uat
     if: build.branch == pipeline.default_branch
+    agents:
+      queue: haven-qa-agent
 
   - input: ":gb: deploy to production? :thumbsup:"
     key: "block-production"
@@ -55,4 +63,6 @@ steps:
     env:
       ENV: production
     if: build.branch == pipeline.default_branch
+    agents:
+      queue: haven-prod-agent
 
