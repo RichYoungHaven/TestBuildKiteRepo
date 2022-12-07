@@ -3,11 +3,12 @@
   services:    
 
     terraform:
-      image: hashicorp/terraform:latest
+      image: hashicorp/terraform:0.13.5
       env_file: .env
       environment:
         AWS_SHARED_CREDENTIALS_FILE: /root/.aws/credentials
       working_dir: /app
+      command: tail -F anything
       volumes:
         - .:/app:rw
         - ~/.aws:/root/.aws
@@ -29,5 +30,6 @@
     checkov:
       image: bridgecrew/checkov
       working_dir: /app
+      command: tail -F anything
       volumes:
         - .:/app:rw
