@@ -8,7 +8,7 @@
       environment:
         AWS_SHARED_CREDENTIALS_FILE: /root/.aws/credentials
       working_dir: /app
-      command: tail -F anything
+      command: tail -f anything
       volumes:
         - .:/app:rw
         - ~/.aws:/root/.aws
