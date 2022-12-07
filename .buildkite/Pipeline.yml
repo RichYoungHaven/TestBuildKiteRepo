@@ -36,7 +36,7 @@ steps:
     agents:
       queue: butlins-dev-agent
 
-    - wait
+  - wait
 
   - label: ":gb: dev build & apply :terraform:"
     depends_on:
