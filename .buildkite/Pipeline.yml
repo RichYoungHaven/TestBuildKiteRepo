@@ -36,6 +36,18 @@ steps:
     agents:
       queue: butlins-dev-agent
 
+    - wait
+
+  - label: ":gb: dev build & apply :terraform:"
+    depends_on:
+      - "validate-terraform"
+    command: .buildkite/scripts/placeholder.sh
+    env:
+      ENV: staging
+    if: build.branch == pipeline.default_branch
+    agents:
+      queue: butlins-dev-agent
+
   - input: ":gb: deploy to qa? :thumbsup:"
     key: "block-qa"
     if: build.branch == pipeline.default_branch
